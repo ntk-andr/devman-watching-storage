@@ -28,8 +28,8 @@ class Visit(models.Model):
         )
 
     def get_duration(self):
-        duration = (self.get_leaved_at() - self.entered_at).seconds
-        return duration
+        duration = (self.get_leaved_at() - self.entered_at).total_seconds()
+        return int(duration)
 
     def format_duration(self, seconds):
         hours = seconds // 3600
@@ -38,10 +38,9 @@ class Visit(models.Model):
 
     def get_leaved_at(self):
         if not self.leaved_at:
-            leaved_at = timezone.now()
+            return timezone.now()
         else:
-            leaved_at = self.leaved_at
-        return leaved_at
+            return self.leaved_at
 
     def is_long(self, minutes=60):
         visit_time_second = (self.get_leaved_at() - self.entered_at).seconds

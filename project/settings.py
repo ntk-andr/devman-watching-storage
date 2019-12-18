@@ -7,7 +7,7 @@ env.read_env()
 
 DATABASES = {
     'default': {
-        'ENGINE': f'django.db.backends.postgresql_psycopg2',
+        'ENGINE': f'django.db.backends.{env("DB_ENGINE")}',
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
         'NAME': env('DB_NAME'),
@@ -20,7 +20,7 @@ INSTALLED_APPS = ['datacenter']
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env('DEBUG')
+DEBUG = env.bool('DEBUG')
 
 ROOT_URLCONF = "project.urls"
 
@@ -41,6 +41,6 @@ USE_L10N = True
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = env('TIME_ZONE')
 
 USE_TZ = True
